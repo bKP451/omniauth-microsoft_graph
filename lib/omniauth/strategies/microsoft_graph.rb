@@ -87,7 +87,9 @@ module OmniAuth
       end
 
       def determine_profile_endpoint(request)
-        if request.env['omniauth.params']['scope']&.include? 'yammer'
+        scope = request&.env&.dig('omniauth.params', 'scope')
+
+        if scope&.include?('yammer')
           YAMMER_PROFILE_URL
         else
           MICROSOFT_GRAPH_PROFILE_URL
